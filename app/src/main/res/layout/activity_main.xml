@@ -52,8 +52,6 @@
                 android:src="@drawable/ic_baseline_image_24"
                 android:adjustViewBounds="true"
                 app:strokeWidth="2dp"/>
-
-            <!--TextView: Label to show that below will be the recognized text shown-->
             <TextView
                 style="@style/TextAppearance.MaterialComponents.Headline6"
                 android:layout_width="match_parent"
@@ -61,12 +59,36 @@
                 android:layout_marginTop="10dp"
                 android:text="Recognized Text"/>
 
-            <!--EditText: Show the recognized text, You may use TextView instead-->
-            <EditText
-                android:id="@+id/recognizedTextEt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="12sp"/>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <!--TextView: Label to show that below will be the recognized text shown-->
+
+
+                <!--EditText: Show the recognized text, You may use TextView instead-->
+                <EditText
+                    android:id="@+id/recognizedTextEt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:padding="10sp"
+                    android:paddingBottom="100dp"
+                    android:textSize="12sp">
+
+                </EditText>
+                <ImageView
+                    android:id="@+id/copyTextIv12"
+                    android:paddingEnd="10sp"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignEnd="@+id/recognizedTextEt"
+                    android:src="@drawable/copy_btn"
+                    android:visibility="gone"
+                    android:paddingBottom="5dp"
+                    />
+            </RelativeLayout>
 
 
         </LinearLayout>

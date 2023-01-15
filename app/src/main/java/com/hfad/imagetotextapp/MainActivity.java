@@ -12,7 +12,10 @@ import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -23,6 +26,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
@@ -44,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
     private MaterialButton recognizedTextBtn;
     private ShapeableImageView imageIv;
     private EditText recognizedTextEt;
+    private ImageView copyTextBtn;
 
     //TAG
     private static final String TAG = "MAIN_TAG";
@@ -75,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
         recognizedTextBtn = findViewById(R.id.recognizeTextBtn);
         imageIv = findViewById(R.id.imageIv);
         recognizedTextEt = findViewById(R.id.recognizedTextEt);
+        copyTextBtn = findViewById(R.id.copyTextIv12);
 
         //init arrays of permissions required for camera, gallery
         cameraPermissions = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
@@ -107,6 +113,14 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        copyTextBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String scanned_text = recognizedTextEt.getText().toString();
+                copyToClipBoard(scanned_text);
+            }
+        });
     }
 
     private void recognizeTextFromImage() {
@@ -132,6 +146,8 @@ public class MainActivity extends AppCompatActivity {
                             Log.d(TAG, "onSuccess: recognizedText" + recognizedText);
                             //set the recognized text to edit text
                             recognizedTextEt.setText(recognizedText);
+                            copyTextBtn.setVisibility(View.VISIBLE);
+
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -333,5 +349,13 @@ public class MainActivity extends AppCompatActivity {
             }
             break;
         }
+    }
+
+    //Copy to Clipboard
+    private void copyToClipBoard(String text) {
+        ClipboardManager clipBoard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData clip = ClipData.newPlainText("Copied data", text);
+        clipBoard.setPrimaryClip(clip);
+        Toast.makeText(MainActivity.this, "Copied to clipboard!", Toast.LENGTH_SHORT).show();
     }
 }
