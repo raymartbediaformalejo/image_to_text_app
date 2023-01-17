@@ -49,10 +49,12 @@ public class MainActivity extends AppCompatActivity {
     //UI View
     private MaterialButton inputImageBtn;
     private MaterialButton recognizedTextBtn;
+    private MaterialButton myScanBtn;
     private ShapeableImageView imageIv;
     private EditText recognizedTextEt;
     private ImageView copyTextBtn;
     private ImageView saveTextBtn;
+
 
     //TAG
     private static final String TAG = "MAIN_TAG";
@@ -82,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
         //init UI View
         inputImageBtn = findViewById(R.id.inputImageBtn);
         recognizedTextBtn = findViewById(R.id.recognizeTextBtn);
+        myScanBtn = findViewById(R.id.myScanBtn);
         imageIv = findViewById(R.id.imageIv);
         recognizedTextEt = findViewById(R.id.recognizedTextEt);
         copyTextBtn = findViewById(R.id.copyTextIv12);
@@ -127,7 +130,20 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        saveTextBtn.setOnClickListener((v) -> saveText());
+        myScanBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity( new Intent(MainActivity.this, MyScansActivity.class));
+                finish();
+            }
+        });
+
+        saveTextBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                saveText();
+            }
+        });
     }
 
     private void recognizeTextFromImage() {
@@ -372,6 +388,7 @@ public class MainActivity extends AppCompatActivity {
         String scanContent = recognizedTextEt.getText().toString();
 
         ScanText scanText = new ScanText();
+        scanText.setTitle(scanContent);
         scanText.setContent(scanContent);
         scanText.setTimestamp(Timestamp.now());
 

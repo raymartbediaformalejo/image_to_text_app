@@ -34,6 +34,15 @@
             android:layout_marginStart="5dp"
             android:text="Recognize Text"
             android:layout_height="match_parent"/>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/myScanBtn"
+            android:layout_width="match_parent"
+            app:cornerRadius="5dp"
+            android:layout_weight="1"
+            app:icon="@drawable/ic_baseline_document_scanner_24"
+            android:layout_marginStart="5dp"
+            android:text="My Scans"
+            android:layout_height="match_parent"/>
     </LinearLayout>
     
     <ScrollView
@@ -51,7 +60,6 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_baseline_image_24"
                 android:adjustViewBounds="true"
-                app:strokeWidth="2dp"
                 android:background="@drawable/rounder_corner"/>
             <TextView
                 style="@style/TextAppearance.MaterialComponents.Headline6"
