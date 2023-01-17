@@ -1,5 +1,6 @@
 plugins {
     id 'com.android.application'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -36,6 +37,8 @@ dependencies {
 
     //Add Text Recognition Google ML Library
     implementation 'com.google.mlkit:text-recognition:16.0.0-beta6'
+    implementation 'com.google.firebase:firebase-auth:21.1.0'
+    implementation 'com.google.firebase:firebase-firestore:24.4.1'
 
     //Image Crop Library
 

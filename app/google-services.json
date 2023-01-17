@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "297320332228",
+    "project_id": "image-to-text-app-d2173",
+    "storage_bucket": "image-to-text-app-d2173.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:297320332228:android:52bc1f045565d9dfba8291",
+        "android_client_info": {
+          "package_name": "com.hfad.imagetotextapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "297320332228-60phrg3mnv26kitq0khglb8ijqmqr2oa.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hfad.imagetotextapp",
+            "certificate_hash": "ce8e173aaac41542a67adde347fb5325d67777bc"
+          }
+        },
+        {
+          "client_id": "297320332228-70g479t1v0rkgei0emrn80k27jnl9vj4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBoPuO9lTWcU6VDl4zh1F_PAEhGJBXMGz4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "297320332228-70g479t1v0rkgei0emrn80k27jnl9vj4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

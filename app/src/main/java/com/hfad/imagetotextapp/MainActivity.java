@@ -30,11 +30,14 @@ import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.imageview.ShapeableImageView;
+import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.mlkit.vision.common.InputImage;
 import com.google.mlkit.vision.text.Text;
 import com.google.mlkit.vision.text.TextRecognition;
@@ -49,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
     private ShapeableImageView imageIv;
     private EditText recognizedTextEt;
     private ImageView copyTextBtn;
+    private ImageView saveTextBtn;
 
     //TAG
     private static final String TAG = "MAIN_TAG";
@@ -81,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
         imageIv = findViewById(R.id.imageIv);
         recognizedTextEt = findViewById(R.id.recognizedTextEt);
         copyTextBtn = findViewById(R.id.copyTextIv12);
+        saveTextBtn = findViewById(R.id.saveButton);
 
         //init arrays of permissions required for camera, gallery
         cameraPermissions = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
@@ -121,6 +126,8 @@ public class MainActivity extends AppCompatActivity {
                 copyToClipBoard(scanned_text);
             }
         });
+
+        saveTextBtn.setOnClickListener((v) -> saveText());
     }
 
     private void recognizeTextFromImage() {
@@ -147,6 +154,7 @@ public class MainActivity extends AppCompatActivity {
                             //set the recognized text to edit text
                             recognizedTextEt.setText(recognizedText);
                             copyTextBtn.setVisibility(View.VISIBLE);
+                            saveTextBtn.setVisibility(View.VISIBLE);
 
                         }
                     })
@@ -357,5 +365,34 @@ public class MainActivity extends AppCompatActivity {
         ClipData clip = ClipData.newPlainText("Copied data", text);
         clipBoard.setPrimaryClip(clip);
         Toast.makeText(MainActivity.this, "Copied to clipboard!", Toast.LENGTH_SHORT).show();
+    }
+
+    //Save Button
+    void saveText() {
+        String scanContent = recognizedTextEt.getText().toString();
+
+        ScanText scanText = new ScanText();
+        scanText.setContent(scanContent);
+        scanText.setTimestamp(Timestamp.now());
+
+        saveScanTextToFirebase(scanText);
+    }
+
+    void saveScanTextToFirebase(ScanText scanText) {
+        DocumentReference documentReference;
+        documentReference = Utility.getCollectionReferenceForScanTexts().document();
+
+        documentReference.set(scanText).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    //scans are added
+                    Toast.makeText(MainActivity.this, "Scan added successfully!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(MainActivity.this, "Failed adding scans", Toast.LENGTH_SHORT).show();
+
+                }
+            }
+        });
     }
 }

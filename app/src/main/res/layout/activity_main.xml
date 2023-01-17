@@ -51,12 +51,13 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_baseline_image_24"
                 android:adjustViewBounds="true"
-                app:strokeWidth="2dp"/>
+                app:strokeWidth="2dp"
+                android:background="@drawable/rounder_corner"/>
             <TextView
                 style="@style/TextAppearance.MaterialComponents.Headline6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="28dp"
                 android:text="Recognized Text"/>
 
             <RelativeLayout
@@ -71,9 +72,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
-                    android:padding="10sp"
-                    android:paddingBottom="100dp"
-                    android:textSize="12sp">
+                    android:padding="16dp"
+                    android:layout_marginTop="10dp"
+                    android:textSize="12sp"
+                    android:background="@drawable/rounder_corner">
 
                 </EditText>
                 <ImageView
@@ -85,6 +87,17 @@
                     android:layout_alignParentBottom="true"
                     android:layout_alignEnd="@+id/recognizedTextEt"
                     android:src="@drawable/copy_btn"
+                    android:visibility="gone"
+                    android:paddingBottom="5dp"
+                    />
+                <ImageView
+                    android:id="@+id/saveButton"
+                    android:paddingEnd="10sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignEnd="@+id/recognizedTextEt"
+                    android:src="@drawable/save_btn"
                     android:visibility="gone"
                     android:paddingBottom="5dp"
                     />
