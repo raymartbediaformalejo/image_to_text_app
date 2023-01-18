@@ -114,7 +114,7 @@
                         android:layout_marginTop="10dp"
                         android:textSize="14sp"
                         android:background="@drawable/rounder_corner"
-                        android:layout_marginBottom="40dp">
+                        android:layout_marginBottom="80dp">
 
                     </EditText>
 
