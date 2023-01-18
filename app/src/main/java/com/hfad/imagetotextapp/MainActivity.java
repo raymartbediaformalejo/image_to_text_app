@@ -5,9 +5,13 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.navigation.ui.NavigationUI;
 
 import android.Manifest;
 import android.app.Activity;
@@ -46,6 +50,8 @@ import com.google.mlkit.vision.text.latin.TextRecognizerOptions;
 
 public class MainActivity extends AppCompatActivity {
 
+//    NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+
     //UI View
     private MaterialButton inputImageBtn;
     private MaterialButton recognizedTextBtn;
@@ -53,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
     private ShapeableImageView imageIv;
     private EditText recognizedTextEt;
     private ImageView copyTextBtn;
-    private ImageView saveTextBtn;
 
 
     //TAG
@@ -84,11 +89,9 @@ public class MainActivity extends AppCompatActivity {
         //init UI View
         inputImageBtn = findViewById(R.id.inputImageBtn);
         recognizedTextBtn = findViewById(R.id.recognizeTextBtn);
-        myScanBtn = findViewById(R.id.myScanBtn);
         imageIv = findViewById(R.id.imageIv);
         recognizedTextEt = findViewById(R.id.recognizedTextEt);
         copyTextBtn = findViewById(R.id.copyTextIv12);
-        saveTextBtn = findViewById(R.id.saveButton);
 
         //init arrays of permissions required for camera, gallery
         cameraPermissions = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
@@ -130,21 +133,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        myScanBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity( new Intent(MainActivity.this, MyScansActivity.class));
-                finish();
-            }
-        });
-
-        saveTextBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                saveText();
-            }
-        });
     }
+
 
     private void recognizeTextFromImage() {
         Log.d(TAG, "recognizeTextFromImage: ");
@@ -170,7 +160,6 @@ public class MainActivity extends AppCompatActivity {
                             //set the recognized text to edit text
                             recognizedTextEt.setText(recognizedText);
                             copyTextBtn.setVisibility(View.VISIBLE);
-                            saveTextBtn.setVisibility(View.VISIBLE);
 
                         }
                     })
@@ -383,33 +372,4 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(MainActivity.this, "Copied to clipboard!", Toast.LENGTH_SHORT).show();
     }
 
-    //Save Button
-    void saveText() {
-        String scanContent = recognizedTextEt.getText().toString();
-
-        ScanText scanText = new ScanText();
-        scanText.setTitle(scanContent);
-        scanText.setContent(scanContent);
-        scanText.setTimestamp(Timestamp.now());
-
-        saveScanTextToFirebase(scanText);
-    }
-
-    void saveScanTextToFirebase(ScanText scanText) {
-        DocumentReference documentReference;
-        documentReference = Utility.getCollectionReferenceForScanTexts().document();
-
-        documentReference.set(scanText).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    //scans are added
-                    Toast.makeText(MainActivity.this, "Scan added successfully!", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(MainActivity.this, "Failed adding scans", Toast.LENGTH_SHORT).show();
-
-                }
-            }
-        });
-    }
 }

@@ -22,13 +22,13 @@ public class SplashScreen extends AppCompatActivity {
             public void run() {
                 FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
                 if (currentUser==null) {
-                    startActivity( new Intent(SplashScreen.this, LoginActivity.class));
+                    startActivity( new Intent(SplashScreen.this, OnboardingActivity.class));
 
                 } else {
                     startActivity( new Intent(SplashScreen.this, MainActivity.class));
                 }
                 finish();
             }
-        }, 3000);
+        }, 300);
     }
 }
